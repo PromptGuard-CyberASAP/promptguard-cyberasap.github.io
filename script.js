@@ -30,11 +30,12 @@
       var t = e.target;
       t.classList.add("in");
       if (t.classList.contains("stats__grid") && !seen.has(t)) { seen.add(t); countUp(t); }
-      if (t.classList.contains("chart") && !seen.has(t)) { seen.add(t); animChart(t); }
+      if (t.classList.contains("duo") && !seen.has(t)) { seen.add(t); animDuo(); }
+      if (t.classList.contains("bull") && !seen.has(t)) { seen.add(t); var v = $(".bull__viz", t); if (v) v.classList.add("in"); }
       io.unobserve(t);
     });
   }, { threshold: 0.16, rootMargin: "0px 0px -8% 0px" });
-  $$(".rv, .stats__grid, .chart, .prize").forEach(function (n) { io.observe(n); });
+  $$(".rv, .stats__grid").forEach(function (n) { io.observe(n); });
 
   // ---- stat count-up ------------------------------------------------------
   function countUp(grid) {
@@ -53,96 +54,82 @@
   }
 
   // =========================================================================
-  // Market charts — animated area + line drawn from data
+  // Opportunity — dual-curve chart (compliance vs agents) + bullseye
   // =========================================================================
-  var CHART_DATA = {
-    today: {
-      pts: [[2025, 6.4], [2026, 8.1], [2027, 10.2], [2028, 12.8], [2029, 16.2], [2030, 20.4]],
-      max: 22, xlabels: [2025, 2027, 2030], hero: false,
-      startLbl: "£6.4bn", endLbl: "£20bn"
-    },
-    tomorrow: {
-      pts: [[2024, 5], [2025, 7.2], [2026, 10.5], [2027, 15.2], [2028, 22.1], [2029, 32], [2030, 47]],
-      max: 52, xlabels: [2024, 2027, 2030], hero: true,
-      startLbl: "$5bn", endLbl: "$47bn"
-    }
+  var DUO = {
+    years: [2024, 2025, 2026, 2027, 2028, 2029, 2030],
+    comp: [5.1, 6.4, 8.1, 10.2, 12.8, 16.2, 20.4],
+    agent: [5, 7.2, 10.5, 15.2, 22.1, 32, 47], max: 50
   };
-  var W = 520, H = 232, PL = 14, PR = 16, PT = 26, PB = 28;
-
-  function buildChart(plot, key) {
-    var d = CHART_DATA[key], n = d.pts.length;
-    var iw = W - PL - PR, ih = H - PT - PB;
-    var x = function (i) { return PL + iw * (i / (n - 1)); };
-    var y = function (v) { return PT + ih * (1 - v / d.max); };
+  var DW = 920, DH = 400, DPL = 46, DPR = 104, DPT = 40, DPB = 46, DN = DUO.years.length;
+  var dux = function (i) { return DPL + (DW - DPL - DPR) * (i / (DN - 1)); };
+  var duy = function (v) { return DPT + (DH - DPT - DPB) * (1 - v / DUO.max); };
+  function duoPath(arr) { return arr.map(function (v, i) { return (i ? "L" : "M") + dux(i).toFixed(1) + "," + duy(v).toFixed(1); }).join(" "); }
+  var duo = null;
+  function buildDuo() {
+    var plot = $(".duo__plot"); if (!plot) return;
     var svg = document.createElementNS(SVGNS, "svg");
-    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
-    svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
-
+    svg.setAttribute("viewBox", "0 0 " + DW + " " + DH); svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
     var defs = document.createElementNS(SVGNS, "defs");
-    var grad = document.createElementNS(SVGNS, "linearGradient");
-    grad.setAttribute("id", d.hero ? "cg-hero" : "cg-today");
-    grad.setAttribute("x1", "0"); grad.setAttribute("y1", "0"); grad.setAttribute("x2", "0"); grad.setAttribute("y2", "1");
-    var c = d.hero ? "156,116,68" : "26,22,17";
-    grad.innerHTML = '<stop offset="0" stop-color="rgb(' + c + ')" stop-opacity="0.22"/><stop offset="1" stop-color="rgb(' + c + ')" stop-opacity="0"/>';
-    defs.appendChild(grad); svg.appendChild(defs);
-
-    // gridlines
-    [0, 0.5, 1].forEach(function (g) {
-      var gy = PT + ih * g;
-      var ln = document.createElementNS(SVGNS, "line");
-      ln.setAttribute("class", "c-grid"); ln.setAttribute("x1", PL); ln.setAttribute("x2", W - PR);
-      ln.setAttribute("y1", gy); ln.setAttribute("y2", gy); svg.appendChild(ln);
+    var g = document.createElementNS(SVGNS, "linearGradient");
+    g.setAttribute("id", "dg-agent"); g.setAttribute("x1", "0"); g.setAttribute("y1", "0"); g.setAttribute("x2", "0"); g.setAttribute("y2", "1");
+    g.innerHTML = '<stop offset="0" stop-color="#cf9f60" stop-opacity="0.28"/><stop offset="1" stop-color="#cf9f60" stop-opacity="0"/>';
+    defs.appendChild(g); svg.appendChild(defs);
+    [0, 0.25, 0.5, 0.75, 1].forEach(function (gg) {
+      var gy = DPT + (DH - DPT - DPB) * gg, ln = document.createElementNS(SVGNS, "line");
+      ln.setAttribute("class", "d-grid"); ln.setAttribute("x1", DPL); ln.setAttribute("x2", DW - DPR); ln.setAttribute("y1", gy); ln.setAttribute("y2", gy); svg.appendChild(ln);
     });
-
-    var line = "", area = "M" + x(0) + "," + (H - PB) + " L";
-    d.pts.forEach(function (p, i) { var px = x(i), py = y(p[1]); line += (i ? " L" : "M") + px + "," + py; area += (i ? " L" : "") + px + "," + py; });
-    area += " L" + x(n - 1) + "," + (H - PB) + " Z";
-
-    var ap = document.createElementNS(SVGNS, "path");
-    ap.setAttribute("class", "c-area"); ap.setAttribute("d", area);
-    ap.setAttribute("fill", "url(#" + (d.hero ? "cg-hero" : "cg-today") + ")"); svg.appendChild(ap);
-
-    var lp = document.createElementNS(SVGNS, "path");
-    lp.setAttribute("class", "c-line"); lp.setAttribute("d", line); svg.appendChild(lp);
-
-    // endpoint dots + value labels
-    [[0, d.startLbl, "start"], [n - 1, d.endLbl, "end"]].forEach(function (e) {
-      var i = e[0], px = x(i), py = y(d.pts[i][1]);
-      var dot = document.createElementNS(SVGNS, "circle");
-      dot.setAttribute("class", "c-dot"); dot.setAttribute("cx", px); dot.setAttribute("cy", py); dot.setAttribute("r", i === n - 1 ? 4.5 : 3.5);
-      svg.appendChild(dot);
-      var lab = document.createElementNS(SVGNS, "text");
-      lab.setAttribute("class", "c-vlbl"); lab.setAttribute("x", e[2] === "end" ? px - 4 : px + 6);
-      lab.setAttribute("y", py - 10); lab.setAttribute("text-anchor", e[2] === "end" ? "end" : "start");
-      lab.textContent = e[1]; svg.appendChild(lab);
+    var area = document.createElementNS(SVGNS, "path"); area.setAttribute("class", "d-area"); area.setAttribute("fill", "url(#dg-agent)");
+    area.setAttribute("d", "M" + dux(0) + "," + (DH - DPB) + " " + duoPath(DUO.agent).replace("M", "L") + " L" + dux(DN - 1) + "," + (DH - DPB) + " Z"); svg.appendChild(area);
+    var comp = document.createElementNS(SVGNS, "path"); comp.setAttribute("class", "d-comp"); comp.setAttribute("d", duoPath(DUO.comp)); svg.appendChild(comp);
+    var agent = document.createElementNS(SVGNS, "path"); agent.setAttribute("class", "d-agent"); agent.setAttribute("d", duoPath(DUO.agent)); svg.appendChild(agent);
+    var ex = dux(DN - 1), ay = duy(DUO.agent[DN - 1]), cy = duy(DUO.comp[DN - 1]);
+    ["d-pulse", "d-dot-a"].forEach(function (cls) { var c = document.createElementNS(SVGNS, "circle"); c.setAttribute("class", cls); c.setAttribute("cx", ex); c.setAttribute("cy", ay); c.setAttribute("r", cls === "d-pulse" ? 4 : 4.5); svg.appendChild(c); });
+    function txt(cls, xx, yy, s) { var t = document.createElementNS(SVGNS, "text"); t.setAttribute("class", cls); t.setAttribute("x", xx); t.setAttribute("y", yy); t.textContent = s; svg.appendChild(t); }
+    txt("d-vlbl-a", ex + 10, ay + 3, "$47bn"); txt("d-vlbl-c", ex + 10, cy + 5, "£20bn");
+    [[0, 2024, "start"], [3, 2027, "middle"], [6, 2030, "end"]].forEach(function (p) {
+      var t = document.createElementNS(SVGNS, "text"); t.setAttribute("class", "d-xlbl"); t.setAttribute("x", dux(p[0])); t.setAttribute("y", DH - 8); t.setAttribute("text-anchor", p[2]); t.textContent = p[1]; svg.appendChild(t);
     });
-
-    // x labels
-    d.xlabels.forEach(function (yr) {
-      var i = d.pts.map(function (p) { return p[0]; }).indexOf(yr); if (i < 0) return;
-      var t = document.createElementNS(SVGNS, "text");
-      t.setAttribute("class", "c-xlbl"); t.setAttribute("x", x(i));
-      t.setAttribute("y", H - 8); t.setAttribute("text-anchor", i === 0 ? "start" : i === n - 1 ? "end" : "middle");
-      t.textContent = yr; svg.appendChild(t);
-    });
-
     plot.appendChild(svg);
-    var len = lp.getTotalLength();
-    lp.style.strokeDasharray = len; lp.style.strokeDashoffset = reduce ? 0 : len; lp.style.transition = "none";
-    return { line: lp };
+    [comp, agent].forEach(function (p) { var len = p.getTotalLength(); p.style.strokeDasharray = len; p.style.strokeDashoffset = reduce ? 0 : len; p.style.transition = "none"; });
+    duo = { plot: plot, comp: comp, agent: agent };
   }
+  function animDuo() {
+    if (!duo) return;
+    duo.plot.classList.add("d-in");
+    if (reduce) { duo.comp.style.strokeDashoffset = 0; duo.agent.style.strokeDashoffset = 0; return; }
+    [duo.comp, duo.agent].forEach(function (p, i) {
+      p.getBoundingClientRect();
+      p.style.transition = "stroke-dashoffset 1.7s cubic-bezier(.4,.75,.3,1) " + (i * 0.18) + "s";
+      p.style.strokeDashoffset = 0;
+    });
+  }
+  function buildBull() {
+    var box = $("[data-bull]"); if (!box) return;
+    var svg = document.createElementNS(SVGNS, "svg"); svg.setAttribute("viewBox", "0 0 220 220"); svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+    ["M18,110 H202", "M110,18 V202"].forEach(function (d) { var l = document.createElementNS(SVGNS, "path"); l.setAttribute("class", "b-cross"); l.setAttribute("d", d); svg.appendChild(l); });
+    [[96, "b-tam"], [60, "b-sam"]].forEach(function (r) { var c = document.createElementNS(SVGNS, "circle"); c.setAttribute("class", "b-ring " + r[1]); c.setAttribute("cx", 110); c.setAttribute("cy", 110); c.setAttribute("r", r[0]); svg.appendChild(c); });
+    var som = document.createElementNS(SVGNS, "circle"); som.setAttribute("class", "b-som"); som.setAttribute("cx", 110); som.setAttribute("cy", 110); som.setAttribute("r", 26); svg.appendChild(som);
+    box.appendChild(svg);
+  }
+  buildDuo(); buildBull();
 
-  var charts = {};
-  $$(".chart__plot").forEach(function (plot) { charts[plot.getAttribute("data-series")] = buildChart(plot, plot.getAttribute("data-series")); });
-  function animChart(fig) {
-    var plot = $(".chart__plot", fig), c = charts[plot.getAttribute("data-series")];
-    if (!c) return;
-    plot.classList.add("c-in");
-    if (reduce) { c.line.style.strokeDashoffset = 0; return; }
-    c.line.getBoundingClientRect();
-    c.line.style.transition = "stroke-dashoffset 1.5s cubic-bezier(.4,.75,.3,1)";
-    c.line.style.strokeDashoffset = 0;
+  // ---- scroll spine + parallax --------------------------------------------
+  var spineFill = $("#spineFill"), pxEls = $$("[data-px]"), ticking = false;
+  function fx() {
+    ticking = false;
+    var de = document.documentElement, sc = window.scrollY || de.scrollTop, max = de.scrollHeight - de.clientHeight, p = max > 0 ? sc / max : 0;
+    if (spineFill) spineFill.style.setProperty("--p", (p * 100).toFixed(2) + "%");
+    if (reduce) return;
+    var vh = window.innerHeight;
+    pxEls.forEach(function (el) {
+      var r = el.getBoundingClientRect(), mid = r.top + r.height / 2 - vh / 2, sp = parseFloat(el.getAttribute("data-px")) || 0;
+      el.style.transform = "translate3d(0," + (mid * sp).toFixed(1) + "px,0)";
+    });
   }
+  function onFx() { if (!ticking) { ticking = true; requestAnimationFrame(fx); } }
+  window.addEventListener("scroll", onFx, { passive: true });
+  window.addEventListener("resize", onFx); fx();
 
   // =========================================================================
   // Agentic canvas — high-level replay of the trust-boundary animation
