@@ -107,9 +107,12 @@
   function buildBull() {
     var box = $("[data-bull]"); if (!box) return;
     var svg = document.createElementNS(SVGNS, "svg"); svg.setAttribute("viewBox", "0 0 220 220"); svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
-    ["M18,110 H202", "M110,18 V202"].forEach(function (d) { var l = document.createElementNS(SVGNS, "path"); l.setAttribute("class", "b-cross"); l.setAttribute("d", d); svg.appendChild(l); });
     [[96, "b-tam"], [60, "b-sam"]].forEach(function (r) { var c = document.createElementNS(SVGNS, "circle"); c.setAttribute("class", "b-ring " + r[1]); c.setAttribute("cx", 110); c.setAttribute("cy", 110); c.setAttribute("r", r[0]); svg.appendChild(c); });
-    var som = document.createElementNS(SVGNS, "circle"); som.setAttribute("class", "b-som"); som.setAttribute("cx", 110); som.setAttribute("cy", 110); som.setAttribute("r", 26); svg.appendChild(som);
+    var som = document.createElementNS(SVGNS, "circle"); som.setAttribute("class", "b-som"); som.setAttribute("cx", 110); som.setAttribute("cy", 110); som.setAttribute("r", 27); svg.appendChild(som);
+    // tier labels marking each ring band (outer=TAM, middle=SAM, centre=SOM)
+    [["TAM", 34, "b-lbl--tam"], ["SAM", 70, "b-lbl--sam"], ["SOM", 114, "b-lbl--som"]].forEach(function (t) {
+      var x = document.createElementNS(SVGNS, "text"); x.setAttribute("class", "b-lbl " + t[2]); x.setAttribute("x", 110); x.setAttribute("y", t[1]); x.setAttribute("text-anchor", "middle"); x.textContent = t[0]; svg.appendChild(x);
+    });
     box.appendChild(svg);
   }
   buildDuo(); buildBull();

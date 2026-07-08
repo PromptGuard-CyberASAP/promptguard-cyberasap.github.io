@@ -296,37 +296,6 @@ a.cta__mail:hover{color:var(--bg)}
 @media(min-width:1280px){.spine{display:block}}
 [data-px]{will-change:transform}
 
-/* ---- showcase: browser mockup ---- */
-.showcase__head{max-width:58ch; margin-bottom:clamp(30px,4vw,52px)}
-.browser{max-width:980px; margin:0 auto; background:#fdfbf7; border:1px solid var(--rule-strong); border-radius:13px; box-shadow:var(--shadow-lg); overflow:hidden}
-.browser__bar{display:flex; align-items:center; gap:14px; padding:11px 16px; background:#ece4d5; border-bottom:1px solid var(--rule)}
-.browser__dots{display:flex; gap:7px}
-.browser__dots i{width:11px; height:11px; border-radius:50%; background:var(--ink-4); opacity:.55}
-.browser__url{flex:1; max-width:300px; display:inline-flex; align-items:center; gap:7px; font-family:var(--mono); font-size:.74rem; color:var(--ink-3); background:var(--bg); border:1px solid var(--rule); border-radius:999px; padding:5px 13px}
-.browser__ext{display:inline-flex; align-items:center; gap:6px; margin-left:auto; font-family:var(--mono); font-size:.68rem; color:var(--accent-2); border:1px solid var(--accent-rule); border-radius:6px; padding:4px 10px; background:var(--accent-soft)}
-.browser__extdot{width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 6px var(--accent)}
-.browser__body{display:grid; grid-template-columns:1fr 310px; min-height:344px}
-.chat{padding:26px 30px; display:flex; flex-direction:column; gap:16px; background:#fdfbf7}
-.chat__row{display:flex; gap:12px; align-items:flex-start}
-.chat__row--me{flex-direction:row-reverse}
-.chat__ava{width:27px; height:27px; border-radius:50%; background:var(--ink); color:var(--bg); font-family:var(--mono); font-size:.58rem; display:flex; align-items:center; justify-content:center; flex:none}
-.chat__bubble{font-size:.95rem; line-height:1.55; color:var(--ink-2); max-width:78%}
-.chat__bubble--me{background:var(--surface); border:1px solid var(--rule); border-radius:13px 13px 4px 13px; padding:12px 15px; color:var(--ink)}
-.chat__bubble mark{background:var(--accent-soft); color:var(--accent-2); border-radius:3px; padding:0 3px; box-shadow:inset 0 -1px 0 var(--accent-rule)}
-.chat__compose{margin-top:auto; display:flex; align-items:center; gap:9px; border:1px solid var(--rule-strong); border-radius:999px; padding:11px 16px; color:var(--ink-4); font-size:.92rem}
-.chat__caret{width:1px; height:16px; background:var(--ink-3); animation:blink 1.1s step-end infinite}
-.chat__send{margin-left:auto; width:27px; height:27px; border-radius:50%; background:var(--ink); color:var(--bg); display:flex; align-items:center; justify-content:center; font-size:.9rem}
-@keyframes blink{50%{opacity:0}}
-.ext{background:var(--surface); border-left:1px solid var(--rule); padding:18px 18px 16px; display:flex; flex-direction:column}
-.ext__top{display:flex; align-items:center; gap:8px; font-family:var(--serif); font-size:1.04rem; color:var(--ink); padding-bottom:12px; border-bottom:1px solid var(--rule)}
-.ext__mark{width:12px; height:12px; border-radius:3px; background:var(--ink); position:relative}
-.ext__mark::after{content:""; position:absolute; inset:3px 3px auto auto; width:4px; height:4px; border-radius:1px; background:var(--accent)}
-.ext__loc{margin-left:auto; font-family:var(--mono); font-size:.55rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3)}
-.ext__cap{font-family:var(--mono); font-size:.57rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3); margin:14px 0 4px}
-.ext__row{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:9px 0; border-bottom:1px solid var(--rule); font-size:.86rem; color:var(--ink-2)}
-.ext__foot{margin-top:14px; display:flex; gap:7px; font-size:.78rem; color:var(--ink-3); line-height:1.45}
-.ext__foot .ok{color:#5f7d4f; flex:none}
-
 /* ---- dark opportunity act ---- */
 .opp{position:relative; background:var(--ink); color:var(--bg); overflow:hidden}
 .opp__wm{position:absolute; top:4%; right:-3%; font-family:var(--serif); font-weight:500; font-size:clamp(7rem,19vw,19rem); line-height:.8; color:rgba(244,238,226,.035); letter-spacing:-.04em; pointer-events:none; z-index:0}
@@ -362,13 +331,15 @@ a.cta__mail:hover{color:var(--bg)}
 .bull{display:flex; flex-direction:column; gap:20px}
 .bull__viz{align-self:center; width:100%; max-width:240px}
 .bull__viz svg{width:100%; height:auto; overflow:visible}
-.b-ring{fill:none; transform-box:fill-box; transform-origin:center; transform:scale(.25); opacity:0; transition:transform .8s cubic-bezier(.2,.7,.2,1), opacity .6s}
-.b-tam{stroke:rgba(244,238,226,.42); stroke-width:1.75}
-.b-sam{stroke:rgba(207,159,96,.7); stroke-width:2}
-.b-som{transform-box:fill-box; transform-origin:center; transform:scale(.25); opacity:0; transition:transform .8s cubic-bezier(.2,.7,.2,1), opacity .6s; fill:#cf9f60; filter:drop-shadow(0 0 12px rgba(207,159,96,.7))}
-.bull__viz.in .b-ring,.bull__viz.in .b-som{transform:scale(1); opacity:1}
-.bull__viz.in .b-sam{transition-delay:.12s} .bull__viz.in .b-som{transition-delay:.26s}
+.b-ring{fill:none}
+.b-tam{stroke:rgba(244,238,226,.5); stroke-width:1.75}
+.b-sam{stroke:rgba(207,159,96,.85); stroke-width:2.25}
+.b-som{fill:#cf9f60; filter:drop-shadow(0 0 12px rgba(207,159,96,.7))}
 .b-cross{stroke:rgba(244,238,226,.2); stroke-width:1}
+.b-lbl{font-family:var(--mono); font-size:12px; letter-spacing:.05em}
+.b-lbl--tam{fill:rgba(244,238,226,.82)}
+.b-lbl--sam{fill:#cf9f60}
+.b-lbl--som{fill:#241f18; font-size:11px; font-weight:600}
 .bull__legend{display:flex; flex-direction:column; gap:13px}
 .bull__row{display:grid; grid-template-columns:46px 1fr; gap:14px; align-items:baseline}
 .bull__k{font-family:var(--mono); font-size:.72rem; letter-spacing:.08em}
@@ -435,6 +406,26 @@ a.cta__mail:hover{color:var(--bg)}
   .prize__v{align-self:center; margin-top:6px}
   .foot__in{flex-direction:column; align-items:flex-start}
   .cta__meta{gap:12px}
+}
+/* ---- mobile hardening ---- */
+main{overflow-x:clip}
+@media (max-width:620px){
+  .wrap{padding:0 20px}
+  .opp__wm{font-size:clamp(4rem,25vw,7rem); top:2%; right:-2%}
+  .opp__grid{gap:36px}
+  .ostat__n{font-size:clamp(2.1rem,8vw,3rem)}
+  .chat{padding:20px 18px}
+  .ext{padding:16px 16px 14px}
+  /* wide diagrams stay legible: scroll instead of shrinking to nothing */
+  .ag__stage{overflow-x:auto; -webkit-overflow-scrolling:touch}
+  .ag__svg{min-width:600px}
+  .duo__plot{overflow-x:auto; -webkit-overflow-scrolling:touch}
+  .duo__plot svg{min-width:460px}
+  .hw__tabs{width:100%}
+}
+@media (max-width:400px){
+  .hero h1{font-size:clamp(2.1rem,8vw,2.6rem)}
+  .ag__counters{gap:16px}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
