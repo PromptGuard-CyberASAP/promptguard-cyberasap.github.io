@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=4">
+<link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body data-theme="daylight">
 
@@ -29,7 +29,6 @@
     <nav class="nav" id="nav" aria-label="Primary">
       <a href="#shift">The shift</a>
       <a href="#how">How it works</a>
-      <a href="#market">The opportunity</a>
       <a href="#team">Team</a>
       <a class="btn btn--primary nav__cta" href="https://forms.microsoft.com/pages/responsepage.aspx?id=fDBSAE1W3E-YeVpEbPbHRvZRavknGYFHsLuQUA7u7gNUMUFIR1RQS1dUQllMSFEwTkNGMVg2TENRTi4u&route=shorturl" target="_blank" rel="noopener">Take the 5-min survey</a>
     </nav>
@@ -76,13 +75,41 @@
   </div>
 </section>
 
-<!-- AFFILIATION -->
-<div class="strip rv">
-  <div class="wrap strip__in">
-    <span>Built at the University of Portsmouth</span><span class="dot"></span>
-    <span>Backed by Innovate UK's CyberASAP programme</span>
+<!-- AFFILIATION / TRUST -->
+<div class="trust rv">
+  <div class="wrap trust__in">
+    <p class="trust__lbl">Built at the University of Portsmouth &nbsp;·&nbsp; Funded by Innovate UK through the CyberASAP programme</p>
+    <div class="trust__logos">
+      <img class="trust__logo trust__logo--ports" src="assets/logos/portsmouth.svg" alt="University of Portsmouth" width="276" height="49" loading="lazy">
+      <img class="trust__logo trust__logo--iuk" src="assets/logos/innovate-uk.png" alt="Innovate UK" width="1491" height="480" loading="lazy">
+      <img class="trust__logo trust__logo--casap" src="assets/logos/cyberasap.png" alt="CyberASAP" width="1046" height="556" loading="lazy">
+    </div>
   </div>
 </div>
+
+<!-- WHAT THIS MEANS FOR YOU -->
+<section class="audience">
+  <div class="wrap">
+    <div class="eyebrow rv"><span class="rule"></span><span class="cap">What this means for you</span></div>
+    <div class="aud rv">
+      <div class="aud__card">
+        <div class="aud__k">Legal, finance &amp; insurance</div>
+        <div class="aud__h">Client confidentiality, kept.</div>
+        <p class="aud__d">Your people keep using AI, and privileged detail never leaves the device. Every decision is logged, so your audit evidence is there without a second copy of the data.</p>
+      </div>
+      <div class="aud__card">
+        <div class="aud__k">MSPs &amp; IT partners</div>
+        <div class="aud__h">A safety layer you can offer clients.</div>
+        <p class="aud__d">Give clients AI protection without shipping their data off to another vendor. It runs on their own machines and works with the tools they already use.</p>
+      </div>
+      <div class="aud__card">
+        <div class="aud__k">Security &amp; IT leaders</div>
+        <div class="aud__h">One control point, vendor-neutral.</div>
+        <p class="aud__d">Cover prompts, uploads and agent actions from the device. Only the policy decision is recorded, and it flows into the tools you already run.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- STATS -->
 <section class="stats" id="shift">
@@ -246,49 +273,11 @@
   </div>
 </section>
 
-<!-- THE OPPORTUNITY (dark act) -->
-<section id="market" class="opp">
-  <div class="opp__wm" data-px="0.1" aria-hidden="true">$47B</div>
-  <div class="wrap">
-    <div class="rv opp__head">
-      <div class="eyebrow eyebrow--dark"><span class="no">04</span><span class="rule"></span><span class="cap">The opportunity</span></div>
-      <h2 class="h2">A compliance wedge today, the privacy layer for agents <em>tomorrow</em>.</h2>
-    </div>
-
-    <div class="opp__grid">
-      <figure class="duo rv">
-        <figcaption class="duo__legend">
-          <span class="duo__lg"><i class="duo__dot duo__dot--c"></i>AI security, our wedge today</span>
-          <span class="duo__lg"><i class="duo__dot duo__dot--a"></i>AI agents, the prize tomorrow</span>
-        </figcaption>
-        <div class="duo__plot" data-series="duo"></div>
-      </figure>
-
-      <div class="bull rv">
-        <span class="cap cap--dim">Size of the prize</span>
-        <div class="bull__viz" data-bull></div>
-        <div class="bull__legend">
-          <div class="bull__row"><span class="bull__k bull__k--tam">TAM</span><div><span class="bull__v">£5.5bn</span><span class="bull__d">the whole regulated market</span></div></div>
-          <div class="bull__row"><span class="bull__k bull__k--sam">SAM</span><div><span class="bull__v">£2.5bn</span><span class="bull__d">legal, finance and insurance</span></div></div>
-          <div class="bull__row"><span class="bull__k bull__k--som">SOM</span><div><span class="bull__v">£1.2m</span><span class="bull__d">what we win first</span></div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="opp__stats rv">
-      <div class="ostat"><div class="ostat__n">$47bn</div><div class="ostat__t">AI agents market by 2030</div></div>
-      <div class="ostat"><div class="ostat__n">~45<span class="ostat__u">% / yr</span></div><div class="ostat__t">agent-market growth rate</div></div>
-      <div class="ostat"><div class="ostat__n">$4.9M</div><div class="ostat__t">average cost of a data breach</div></div>
-    </div>
-    <p class="opp__src rv">Sources: IBM and MarketsandMarkets (AI security); MarketsandMarkets and Gartner (AI agents).</p>
-  </div>
-</section>
-
 <!-- WHY IT HOLDS -->
 <section id="why">
   <div class="wrap">
     <div class="rv" style="max-width:52ch">
-      <div class="eyebrow"><span class="no">05</span><span class="rule"></span><span class="cap">What makes it different</span></div>
+      <div class="eyebrow"><span class="no">04</span><span class="rule"></span><span class="cap">What makes it different</span></div>
       <h2 class="h2">The check stays with you.</h2>
     </div>
     <div class="compare rv" style="margin-top:40px">
@@ -307,7 +296,7 @@
 <section id="team" class="teamsec">
   <div class="wrap split">
     <div class="rv">
-      <div class="eyebrow"><span class="no">06</span><span class="rule"></span><span class="cap">The team</span></div>
+      <div class="eyebrow"><span class="no">05</span><span class="rule"></span><span class="cap">The team</span></div>
       <h2 class="h2">Specialists across security, AI and commercialisation.</h2>
       <p class="lead" style="margin-top:24px">A University of Portsmouth team spanning LLM security, privacy, federated learning, DevSecOps, market research and technology transfer, with the technical and commercial depth behind PromptGuard.</p>
     </div>
@@ -326,7 +315,7 @@
 <!-- CONTACT -->
 <section class="cta" id="contact">
   <div class="wrap">
-    <div class="eyebrow rv"><span class="no">07</span><span class="rule"></span><span class="cap" style="color:rgba(244,238,226,.6)">Get involved</span></div>
+    <div class="eyebrow rv"><span class="no">06</span><span class="rule"></span><span class="cap" style="color:rgba(244,238,226,.6)">Get involved</span></div>
     <h2 class="rv">Help shape it, and tell us where the pain is <em>real</em>.</h2>
     <p class="rv">If your team uses AI and handles sensitive client data, we would like to hear from you. Our five-minute survey feeds our market validation, and we are taking on a small number of design partners for the first pilots.</p>
     <div class="cta__act rv">
@@ -349,6 +338,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=4" defer></script>
+<script src="script.js?v=6" defer></script>
 </body>
 </html>

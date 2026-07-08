@@ -96,6 +96,28 @@ section{padding:clamp(64px,8vw,116px) 0}
 .strip__in{display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap; color:var(--ink-3)}
 .strip__in span{font-family:var(--mono); font-size:.74rem; letter-spacing:.1em; text-transform:uppercase}
 
+/* ---- trust bar (affiliation logos) ---- */
+.trust{background:var(--ink); color:var(--bg)}
+.trust__in{display:flex; flex-direction:column; align-items:center; gap:18px; text-align:center; padding:28px 0}
+.trust__lbl{font-family:var(--mono); font-size:.7rem; letter-spacing:.11em; text-transform:uppercase; color:rgba(244,238,226,.55)}
+.trust__logos{display:flex; align-items:center; justify-content:center; gap:clamp(26px,5vw,60px); flex-wrap:wrap}
+.trust__logo{width:auto; filter:brightness(0) invert(1); opacity:.82; transition:opacity .2s}
+.trust__logo:hover{opacity:1}
+.trust__logo--ports{height:56px}
+.trust__logo--iuk{height:32px}
+.trust__logo--casap{height:44px}
+
+/* ---- audience: what this means for you ---- */
+.audience .eyebrow{margin-bottom:clamp(24px,3vw,36px)}
+.aud{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(16px,2vw,26px)}
+.aud__card{padding:clamp(22px,2.4vw,30px) clamp(20px,2.2vw,28px); background:var(--surface); border:1px solid var(--rule); border-radius:10px; transition:transform .22s cubic-bezier(.2,.7,.2,1), box-shadow .22s, border-color .22s}
+.aud__card:hover{transform:translateY(-3px); box-shadow:var(--shadow-lg); border-color:var(--rule-strong)}
+.aud__k{font-family:var(--mono); font-size:.7rem; letter-spacing:.09em; text-transform:uppercase; color:var(--accent-2)}
+.aud__h{font-family:var(--serif); font-size:1.28rem; line-height:1.16; margin-top:12px; color:var(--ink)}
+.aud__d{margin-top:13px; font-size:.98rem; line-height:1.55; color:var(--ink-2)}
+.aud>*{min-width:0}
+@media (max-width:820px){.aud{grid-template-columns:1fr}}
+
 /* ---- stats ---- */
 .stats{background:var(--surface); border-bottom:1px solid var(--rule); border-top:1px solid var(--rule)}
 .stats__grid{display:grid; grid-template-columns:repeat(4,1fr); gap:0}
