@@ -97,15 +97,16 @@ section{padding:clamp(64px,8vw,116px) 0}
 .strip__in span{font-family:var(--mono); font-size:.74rem; letter-spacing:.1em; text-transform:uppercase}
 
 /* ---- trust bar (affiliation logos) ---- */
-.trust{background:var(--ink); color:var(--bg)}
+.trust{background:var(--surface); border-top:1px solid var(--rule); border-bottom:1px solid var(--rule)}
 .trust__in{display:flex; flex-direction:column; align-items:center; gap:18px; text-align:center; padding:28px 0}
-.trust__lbl{font-family:var(--mono); font-size:.7rem; letter-spacing:.11em; text-transform:uppercase; color:rgba(244,238,226,.55)}
+.trust__lbl{font-family:var(--mono); font-size:.7rem; letter-spacing:.11em; text-transform:uppercase; color:var(--ink-3)}
 .trust__logos{display:flex; align-items:center; justify-content:center; gap:clamp(26px,5vw,60px); flex-wrap:wrap}
-.trust__logo{width:auto; filter:brightness(0) invert(1); opacity:.82; transition:opacity .2s}
+.trust__logo{width:auto; opacity:.92; transition:opacity .2s}
 .trust__logo:hover{opacity:1}
 .trust__logo--ports{height:56px}
 .trust__logo--iuk{height:32px}
-.trust__logo--casap{height:44px}
+/* CyberASAP publishes only a white logo; render it dark for the light bar */
+.trust__logo--casap{height:42px; filter:brightness(0); opacity:.82}
 
 /* ---- audience: what this means for you ---- */
 .audience .eyebrow{margin-bottom:clamp(24px,3vw,36px)}
