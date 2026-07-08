@@ -387,6 +387,8 @@ a.cta__mail:hover{color:var(--bg)}
 /* ---- reveal ---- */
 .rv{opacity:0; transform:translateY(16px); transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)}
 .rv.in{opacity:1; transform:none}
+/* parallax elements drive their own transform on scroll — don't transition it (avoids lag) */
+.rv[data-px]{transition:opacity .7s cubic-bezier(.2,.7,.2,1)}
 
 /* ---- responsive ---- */
 @media (max-width:960px){
