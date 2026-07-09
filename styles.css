@@ -109,7 +109,8 @@ section{padding:clamp(64px,8vw,116px) 0}
 .trust__logo--casap{height:42px; filter:brightness(0); opacity:.82}
 
 /* ---- audience: what this means for you ---- */
-.audience .eyebrow{margin-bottom:clamp(24px,3vw,36px)}
+.audience .eyebrow{margin-bottom:14px}
+.aud__intro{max-width:62ch; margin:0 0 clamp(26px,3vw,40px); font-size:1.12rem; line-height:1.5; color:var(--ink-2)}
 .aud{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(16px,2vw,26px)}
 .aud__card{padding:clamp(22px,2.4vw,30px) clamp(20px,2.2vw,28px); background:var(--surface); border:1px solid var(--rule); border-radius:10px; transition:transform .22s cubic-bezier(.2,.7,.2,1), box-shadow .22s, border-color .22s}
 .aud__card:hover{transform:translateY(-3px); box-shadow:var(--shadow-lg); border-color:var(--rule-strong)}
@@ -290,7 +291,10 @@ section{padding:clamp(64px,8vw,116px) 0}
 .cta h2{font-family:var(--serif); font-size:clamp(2rem,1.4rem+2.4vw,3.4rem); line-height:1.05; max-width:20ch}
 .cta h2 em{font-style:italic}
 .cta p{margin-top:22px; max-width:52ch; color:rgba(244,238,226,.72); font-size:1.1rem}
-.cta__act{margin-top:34px; display:flex; gap:16px; align-items:center; flex-wrap:wrap}
+.cta__perk{margin-top:26px; max-width:56ch; padding:16px 20px; border:1px solid rgba(244,238,226,.2); border-radius:8px; background:rgba(244,238,226,.05)}
+.cta__perk-k{display:block; font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:#cf9f60; margin-bottom:6px}
+.cta__perk-d{color:rgba(244,238,226,.85); font-size:1rem; line-height:1.5}
+.cta__act{margin-top:30px; display:flex; gap:16px; align-items:center; flex-wrap:wrap}
 .btn--invert{background:var(--bg); color:var(--ink); border-color:var(--bg)}
 .btn--invert:hover{background:#fff; box-shadow:0 8px 30px rgba(0,0,0,.25)}
 .btn--ghost{background:transparent; color:var(--bg); border-color:rgba(244,238,226,.35)}
