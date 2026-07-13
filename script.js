@@ -134,6 +134,20 @@
   window.addEventListener("scroll", onFx, { passive: true });
   window.addEventListener("resize", onFx); fx();
 
+  // ---- explainer video: serve the desktop or mobile cut by viewport ------
+  var vid = $("#explainer-video");
+  if (vid) {
+    var vmq = window.matchMedia("(max-width: 720px)");
+    function setVid() {
+      var want = vmq.matches ? "assets/video/explainer-mobile.mp4" : "assets/video/explainer-desktop.mp4";
+      if (vid.getAttribute("data-src") === want) return;
+      vid.setAttribute("data-src", want);
+      vid.src = want; vid.load();
+    }
+    setVid();
+    if (vmq.addEventListener) vmq.addEventListener("change", setVid); else vmq.addListener(setVid);
+  }
+
   // =========================================================================
   // Agentic canvas — high-level replay of the trust-boundary animation
   // =========================================================================
